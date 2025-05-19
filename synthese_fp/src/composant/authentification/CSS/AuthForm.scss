@@ -1,0 +1,247 @@
+// Mixins pour éviter Compass et utiliser du SCSS natif
+@mixin border-radius($radius) {
+  border-radius: $radius;
+}
+
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
+}
+
+@mixin transition($transition...) {
+  transition: $transition;
+}
+
+// Variables
+$body-bg: #ffffff;
+$form-bg: #d35400;
+$text-color: #333;
+$white: #ffffff;
+
+$main: #e67e22;
+$main-light: lighten($main, 5%);
+$main-dark: darken($main, 5%);
+
+$gray-light: #ddd;
+$gray: #bbb;
+
+$thin: 300;
+$normal: 400;
+$bold: 600;
+$br: 4px;
+
+// Reset Box Model
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  background: $body-bg;
+  font-family: "Titillium Web", sans-serif;
+  color: $text-color;
+}
+
+a {
+  text-decoration: none;
+  color: $main;
+  @include transition(0.5s ease);
+
+  &:hover {
+    color: $main-dark;
+  }
+}
+
+.form {
+  background: white;
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto;
+  @include border-radius($br);
+  @include box-shadow(0 4px 10px 4px rgba($form-bg, 0.3));
+  color: black;
+}
+
+// Tabs (Sign Up & Log In)
+.tab-group {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  li a {
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    background: rgba($gray-light, 0.5);
+    color: $text-color;
+    font-size: 20px;
+    float: left;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    @include transition(0.5s ease);
+
+    &:hover {
+      background: $main-dark;
+      color: $white;
+    }
+  }
+
+  .active a {
+    background: $main;
+    color: $white;
+  }
+}
+
+h1 {
+  text-align: center;
+  color: black;
+  font-weight: $thin;
+  margin: 0 0 40px;
+}
+
+label {
+  position: absolute;
+  left: 13px;
+  color: black;
+  @include transition(all 0.25s ease);
+  pointer-events: none;
+  font-size: 22px;
+
+  .req {
+    margin: 2px;
+    color: $main;
+  }
+}
+
+label.active {
+  transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+
+  .req {
+    opacity: 0;
+  }
+}
+
+label.highlight {
+  color: $white;
+}
+
+input,
+textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid $gray-light;
+  color: black;
+  border-radius: 0;
+  @include transition(border-color 0.25s ease, box-shadow 0.25s ease);
+
+  &:focus {
+    outline: 0;
+    border-color: $main;
+  }
+}
+
+textarea {
+  border: 2px solid $gray-light;
+  resize: vertical;
+}
+
+.field-wrap {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.top-row {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  > div {
+    float: left;
+    width: 48%;
+    margin-right: 4%;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Bouton principal
+.button {
+  border: 0;
+  outline: none;
+  padding: 15px 0;
+  font-size: 2rem;
+  font-weight: $bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: $main;
+  color: $white;
+  @include transition(all 0.5s ease);
+
+  &:hover,
+  &:focus {
+    background: $main-dark;
+  }
+
+  &:disabled {
+    background: lighten($main, 20%); /* Rend la couleur plus claire quand désactivé */
+    color: darken($white, 20%); /* Change la couleur du texte pour plus de contraste */
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.button-block {
+  display: block;
+  width: 100%;
+}
+
+// Lien mot de passe oublié
+.forgot {
+  margin-top: -20px;
+  text-align: right;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  color: #ff4d4d;  /* Rouge vif */
+  background: #ffe6e6; /* Fond léger */
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
